@@ -4,19 +4,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class CounterViewModel : ViewModel() {
-    val counter = MutableLiveData<CounterModel>()
+
+    private val counter = MutableLiveData<Int>()
+    val count get() = counter
+
+    init {
+        reset()
+    }
 
     fun increment() {
-        val count = counter.value?.count?: 0
-        counter.value = CounterModel(count.plus(1))
+        counter.value = (counter.value ?: 0) + 1
     }
 
     fun decrement() {
-        val count = counter.value?.count?: 0
-        counter.value = CounterModel(count.minus(1))
+        counter.value = (counter.value ?: 0) - 1
     }
 
     fun reset() {
-        counter.value = CounterModel(0)
+        counter.value = 0
     }
 }

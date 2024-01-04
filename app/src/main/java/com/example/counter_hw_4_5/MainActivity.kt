@@ -2,6 +2,7 @@ package com.example.counter_hw_4_5
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.counter_hw_4_5.databinding.ActivityMainBinding
 
@@ -18,21 +19,18 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnIncrement.setOnClickListener {
             counterViewModel.increment()
-            updateCounter()
         }
 
         binding.btnDecrement.setOnClickListener {
             counterViewModel.decrement()
-            updateCounter()
         }
 
         binding.btnReset.setOnClickListener {
             counterViewModel.reset()
-            updateCounter()
         }
-    }
 
-    private fun updateCounter() {
-        binding.tvCount.text = counterViewModel.counter.value?.count.toString()
+        counterViewModel.count.observe(this, Observer { count ->
+            binding.tvCount.text = count.toString()
+        })
     }
 }
